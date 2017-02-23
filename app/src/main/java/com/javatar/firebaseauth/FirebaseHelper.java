@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -58,10 +57,10 @@ public class FirebaseHelper {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            Toast.makeText((Activity) mContext, "Authentication failed." + task.getException(),
+                            Toast.makeText((Activity) mContext, mContext.getString(R.string.registration_fail),
                                     Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(mContext, "Registration successful", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, mContext.getString(R.string.registration_success), Toast.LENGTH_SHORT).show();
                             mContext.startActivity(new Intent(mContext, MainActivity.class));
                             ((Activity) mContext).finish();
                         }
@@ -86,9 +85,9 @@ public class FirebaseHelper {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (!task.isSuccessful()) {
-                            Toast.makeText(mContext, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, mContext.getString(R.string.send_reset_mail_fail), Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(mContext, "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, mContext.getString(R.string.send_reset_mail_success), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -96,7 +95,6 @@ public class FirebaseHelper {
 
     public void signOut() {
         if(getUser() == null) {
-            Log.e("FirebaseHelper", "Not Authenticated");
             return;
         }
         mFirebaseAuth.signOut();
@@ -119,10 +117,10 @@ public class FirebaseHelper {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(mContext, "Email address is updated. Please sign in with new email id!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(mContext, mContext.getString(R.string.email_update_success), Toast.LENGTH_LONG).show();
                             signOut();
                         } else {
-                            Toast.makeText(mContext, "Failed to update email!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(mContext, mContext.getString(R.string.email_update_fail), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -137,10 +135,10 @@ public class FirebaseHelper {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(mContext, "Password is updated, sign in with new password!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, mContext.getString(R.string.password_update_success), Toast.LENGTH_SHORT).show();
                             signOut();
                         } else {
-                            Toast.makeText(mContext, "Failed to update password!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, mContext.getString(R.string.password_update_fail), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -155,11 +153,11 @@ public class FirebaseHelper {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(mContext, "Your profile is deleted:( Create a account now!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, mContext.getString(R.string.account_delete_success), Toast.LENGTH_SHORT).show();
                             mContext.startActivity(new Intent(mContext, RegistrationActivity.class));
                             ((Activity) mContext).finish();
                         } else {
-                            Toast.makeText(mContext, "Failed to delete your account!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, mContext.getString(R.string.account_delete_fail), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

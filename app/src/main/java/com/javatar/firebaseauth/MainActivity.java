@@ -15,7 +15,11 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener {
 
-    private Button changeEmailButton, changePasswordButton, sendResetEmailButton, removeUserButton, signOutButton;
+    private Button changeEmailButton;
+    private Button changePasswordButton;
+    private Button sendResetEmailButton;
+    private Button removeUserButton;
+    private Button signOutButton;
 
     private FirebaseHelper firebaseHelper;
     private FirebaseUser user;
@@ -44,10 +48,10 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
             public void onClick(View v) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 final EditText edittext = new EditText(MainActivity.this);
-                builder.setTitle("Enter New Email");
+                builder.setTitle(getString(R.string.enter_new_email));
                 builder.setView(edittext);
-                builder.setPositiveButton("Change", null);
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getString(R.string.change), null);
+                builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.dismiss();
                     }
@@ -60,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
                         if (user != null && !edittext.getText().toString().trim().equals("")) {
                             firebaseHelper.updateEmail(edittext.getText().toString().trim());
                         } else if (edittext.getText().toString().trim().equals("")) {
-                            edittext.setError("Enter email");
+                            edittext.setError(getString(R.string.enter_new_email));
                         }
                     }
                 });
@@ -73,10 +77,10 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 final EditText edittext = new EditText(MainActivity.this);
-                builder.setTitle("Enter New Password");
+                builder.setTitle(getString(R.string.enter_new_password));
                 builder.setView(edittext);
-                builder.setPositiveButton("Change", null);
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getString(R.string.change), null);
+                builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.dismiss();
                     }
@@ -88,12 +92,12 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
                     public void onClick(View v) {
                         if (user != null && !edittext.getText().toString().trim().equals("")) {
                             if (edittext.getText().toString().trim().length() < 6) {
-                                edittext.setError("Password too short, enter minimum 6 characters");
+                                edittext.setError(getString(R.string.minimum_password));
                             } else {
                                 firebaseHelper.updatePassword(edittext.getText().toString().trim());
                             }
                         } else if (edittext.getText().toString().trim().equals("")) {
-                            edittext.setError("Enter password");
+                            edittext.setError(getString(R.string.enter_new_password));
                         }
                     }
                 });
@@ -106,10 +110,10 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
             public void onClick(View v) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 final EditText edittext = new EditText(MainActivity.this);
-                builder.setTitle("Enter Your Email");
+                builder.setTitle(getString(R.string.enter_your_email));
                 builder.setView(edittext);
-                builder.setPositiveButton("Send", null);
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getString(R.string.send), null);
+                builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.dismiss();
                     }
@@ -123,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
                             firebaseHelper.resetMyPassword(edittext.getText().toString().trim());
                             dialog.dismiss();
                         } else {
-                            edittext.setError("Enter email");
+                            edittext.setError(getString(R.string.enter_your_email));
                         }
                     }
                 });
